@@ -1,8 +1,13 @@
 %{
 #include <stdio.h>
 %}
+%x comment
 
 %%
+"{" BEGIN(comment);
+<comment>\n { yylineno++; }
+<comment>[^}]* { }
+<comment>"}" BEGIN(INITIAL);
 "if" { printf("%d: %s -> IF\n", yylineno, yytext ); }
 "then" { printf("%d: %s -> THEN\n", yylineno, yytext ); }
 "else" { printf("%d: %s -> ELSE\n", yylineno, yytext ); }
@@ -20,6 +25,7 @@
 ";" { printf("%d: %s -> SEMI\n", yylineno, yytext ); }
 ":=" { printf("%d: %s -> ASSIGN\n", yylineno, yytext ); }
 "(" { printf("%d: %s -> LP\n", yylineno, yytext ); }
+")" { printf("%d: %s -> RP\n", yylineno, yytext ); }
 " " { }
 \n { yylineno++; }
 [0-9]+ { printf("%d: %s -> NUM\n", yylineno, yytext ); }
