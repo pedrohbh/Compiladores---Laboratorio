@@ -1,0 +1,5 @@
+CHAVES, Antonio Augusto; LORENA, Luiz Antonio Nogueira. Clustering search algorithm for the capacitated centered clustering problem. Computers & Operations Research, v. 37, n. 3, p. 552-558, 2010.
+
+RABELLO, Rômulo Louzada et al. A clustering search metaheuristic for the point-feature cartographic label placement problem. European Journal of Operational Research, v. 234, n. 3, p. 802-808, 2014.
+
+OLIVEIRA, Alexandre CM; LORENA, Luiz AN. Hybrid evolutionary algorithms and clustering search. In: Hybrid Evolutionary Algorithms. Springer Berlin Heidelberg, 2007. p. 77-99.
