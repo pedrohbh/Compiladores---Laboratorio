@@ -1,0 +1,5 @@
+$ . ../_set_env.sh
+$ antlr4 Count.g4
+$ javac *.java
+$ java CountUsage Count.g4
+Line count: 4, chars count: 51

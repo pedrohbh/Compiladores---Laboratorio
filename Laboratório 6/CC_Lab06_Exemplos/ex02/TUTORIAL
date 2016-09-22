@@ -1,0 +1,11 @@
+$ . ../_set_env.sh
+$ antlr4 Numbers.g4
+$ javac *.java
+$ grun Numbers tokens -tokens
+123
+abc
+8xy9
+[@0,0:2='123',<1>,1:0]
+[@1,4:6='abc',<2>,2:0]
+[@2,8:11='8xy9',<2>,3:0]
+[@3,13:12='<EOF>',<-1>,4:0]

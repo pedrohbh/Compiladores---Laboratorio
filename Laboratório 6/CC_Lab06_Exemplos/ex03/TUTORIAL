@@ -1,0 +1,10 @@
+$ . ../_set_env.sh
+$ antlr4 Expr.g4
+$ javac *.java
+$ grun Expr prog
+2+3-1
+$ grun Expr prog -tree
+2+3-1
+(prog (stat (expr (expr (expr 2) + (expr 3)) - (expr 1)) \n))
+$ grun Expr prog -gui
+2+3-1
