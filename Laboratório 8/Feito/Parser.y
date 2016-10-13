@@ -13,7 +13,11 @@
 int lval;
 int yylex(void);
 void yyerror(char const *s);
+
+BT *tree;
 %}
+
+%define api.value.type {BT *}
 
 %token IF THEN ELSE END REPEAT UNTIL READ WRITE
 %token PLUS MINUS TIMES OVER
@@ -25,9 +29,10 @@ void yyerror(char const *s);
 %left TIMES OVER
 %%
 
-program: stmt_sequence;
+program: stmt_sequence { tree = $1; };
 
-stmt_sequence: stmt_sequence stmt | stmt;
+stmt_sequence: stmt_sequence stmt { $$ = 
+ | stmt;
 
 stmt: if_stmt | repeat_stmt | assign_stmt | write_stmt | read_stmt;
 
@@ -41,7 +46,11 @@ read_stmt: READ ID SEMI;
 
 write_stmt: WRITE expr SEMI;
 
-expr: expr PLUS expr | expr MINUS expr | expr TIMES expr | expr OVER expr | LP expr RP | NUM | ID;
+expr: expr PLUS expr { $$ = new_node( PLUS_NODE, $1, $3 ); }
+ | expr MINUS expr { $$ = new_node( MINUS_NODE, $1, $3 ); }
+ | expr TIMES expr { $$ = new_node( TIMES_NODE, $1, $3 ); }
+ | expr OVER expr { $$ = new_node( OVER_NODE, $1, $3 ); }
+ | LP expr RP | NUM | ID;
 
 %%
 int main(void)
