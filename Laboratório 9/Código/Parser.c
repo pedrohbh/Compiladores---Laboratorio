@@ -65,11 +65,14 @@
 #line 11 "Parser.y" /* yacc.c:339  */
 
 #include <stdio.h>
+#include "tables.h"
+
+LitTable *tabelaLiterais;
 int lval;
 int yylex(void);
 void yyerror(char const *s);
 
-#line 73 "Parser.c" /* yacc.c:339  */
+#line 76 "Parser.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -146,7 +149,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 150 "Parser.c" /* yacc.c:358  */
+#line 153 "Parser.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -423,9 +426,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    30,    30,    32,    32,    34,    34,    34,    34,    34,
-      34,    34,    36,    38,    40,    40,    42,    44,    46,    48,
-      50,    50,    50,    50,    50,    50,    50
+       0,    33,    33,    35,    35,    37,    37,    37,    37,    37,
+      37,    37,    39,    41,    43,    43,    45,    47,    49,    51,
+      53,    53,    53,    53,    53,    53,    53
 };
 #endif
 
@@ -1493,8 +1496,14 @@ yyreduce:
     int yychar_backup = yychar;
     switch (yyn)
       {
-        
-#line 1498 "Parser.c" /* yacc.c:1646  */
+          case 13:
+#line 41 "Parser.y" /* yacc.c:1646  */
+    { printf("PUTS: %s.\n", get_literal(tabelaLiterais, (yyvsp[-1]))); }
+#line 1503 "Parser.c" /* yacc.c:1646  */
+    break;
+
+
+#line 1507 "Parser.c" /* yacc.c:1646  */
         default: break;
       }
     if (yychar_backup != yychar)
@@ -1734,10 +1743,11 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 52 "Parser.y" /* yacc.c:1906  */
+#line 55 "Parser.y" /* yacc.c:1906  */
 
 int main(void)
 {
+	tabelaLiterais = create_lit_table();
   int result = yyparse();
   if (result == 0) printf("Parse successful!\n");
   else printf("Parse failed...\n");

@@ -4,8 +4,10 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include "tables.h"
 #include "Parser.h"
 extern int lval;
+extern LitTable *tabelaLiterais;
 void unknownToken(char* var);
 %}
 %x comment
@@ -36,7 +38,7 @@ void unknownToken(char* var);
 "(" { return LP; }
 ")" { return RP; }
 " " { }
-"\""[^"\""]*"\"" { return STRING; }
+"\""[^"\""]*"\"" { lval = add_literal( tabelaLiterais, yytext); return STRING; }
 \n { yylineno++; }
 [0-9]+ { lval = atoi(yytext); return NUM; }
 [a-zA-Z]+ { return ID; }

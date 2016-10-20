@@ -10,6 +10,9 @@
 
 %{
 #include <stdio.h>
+#include "tables.h"
+
+LitTable *tabelaLiterais;
 int lval;
 int yylex(void);
 void yyerror(char const *s);
@@ -35,7 +38,7 @@ stmt: if_stmt | repeat_stmt | assign_stmt | write_stmt | read_stmt | var_decl | 
 
 var_decl: INT ID SEMI;
 
-puts_stmt: PUTS STRING SEMI;
+puts_stmt: PUTS STRING SEMI { printf("PUTS: %s.\n", get_literal(tabelaLiterais, $2)); };
 
 if_stmt: IF expr THEN stmt_sequence END | IF expr THEN stmt_sequence ELSE stmt_sequence END;
 
@@ -52,6 +55,7 @@ expr: expr PLUS expr | expr MINUS expr | expr TIMES expr | expr OVER expr | LP e
 %%
 int main(void)
 {
+	tabelaLiterais = create_lit_table();
   int result = yyparse();
   if (result == 0) printf("Parse successful!\n");
   else printf("Parse failed...\n");
