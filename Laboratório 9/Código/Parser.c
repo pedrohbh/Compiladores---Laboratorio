@@ -68,11 +68,12 @@
 #include "tables.h"
 
 LitTable *tabelaLiterais;
+SymTable *tabelaSimbolos;
 int lval;
 int yylex(void);
 void yyerror(char const *s);
 
-#line 76 "Parser.c" /* yacc.c:339  */
+#line 77 "Parser.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -149,7 +150,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 153 "Parser.c" /* yacc.c:358  */
+#line 154 "Parser.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -426,9 +427,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    33,    33,    35,    35,    37,    37,    37,    37,    37,
-      37,    37,    39,    41,    43,    43,    45,    47,    49,    51,
-      53,    53,    53,    53,    53,    53,    53
+       0,    34,    34,    36,    36,    38,    38,    38,    38,    38,
+      38,    38,    40,    45,    47,    47,    49,    51,    53,    55,
+      57,    57,    57,    57,    57,    57,    57
 };
 #endif
 
@@ -1496,14 +1497,22 @@ yyreduce:
     int yychar_backup = yychar;
     switch (yyn)
       {
-          case 13:
-#line 41 "Parser.y" /* yacc.c:1646  */
+          case 12:
+#line 40 "Parser.y" /* yacc.c:1646  */
+    { if ( lookup_var( tabelaSimbolos, get_name( tabelaSimbolos, (yyvsp[-1])) ) == -1 )
+									printf("SEMANTIC ERROR (%d): variable ’%s’ already declared at line %d\n", yylval, get_name( tabelaSimbolos, (yyvsp[-1])), get_line( tabelaSimbolos, (yyvsp[-1])));
+							 }
+#line 1506 "Parser.c" /* yacc.c:1646  */
+    break;
+
+  case 13:
+#line 45 "Parser.y" /* yacc.c:1646  */
     { printf("PUTS: %s.\n", get_literal(tabelaLiterais, (yyvsp[-1]))); }
-#line 1503 "Parser.c" /* yacc.c:1646  */
+#line 1512 "Parser.c" /* yacc.c:1646  */
     break;
 
 
-#line 1507 "Parser.c" /* yacc.c:1646  */
+#line 1516 "Parser.c" /* yacc.c:1646  */
         default: break;
       }
     if (yychar_backup != yychar)
@@ -1743,10 +1752,11 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 55 "Parser.y" /* yacc.c:1906  */
+#line 59 "Parser.y" /* yacc.c:1906  */
 
 int main(void)
 {
+	tabelaSimbolos = create_sym_table();
 	tabelaLiterais = create_lit_table();
   int result = yyparse();
   if (result == 0) printf("Parse successful!\n");

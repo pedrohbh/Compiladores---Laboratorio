@@ -6,8 +6,9 @@
 #include <stdlib.h>
 #include "tables.h"
 #include "Parser.h"
-extern int lval;
+extern int yylval;
 extern LitTable *tabelaLiterais;
+extern SymTable *tabelaSimbolos;
 void unknownToken(char* var);
 %}
 %x comment
@@ -38,10 +39,13 @@ void unknownToken(char* var);
 "(" { return LP; }
 ")" { return RP; }
 " " { }
-"\""[^"\""]*"\"" { lval = add_literal( tabelaLiterais, yytext); return STRING; }
+"\""[^"\""]*"\"" { yylval = add_literal( tabelaLiterais, yytext); return STRING; }
 \n { yylineno++; }
-[0-9]+ { lval = atoi(yytext); return NUM; }
-[a-zA-Z]+ { return ID; }
+[0-9]+ { yylval = atoi(yytext); return NUM; }
+[a-zA-Z]+ { 	if ( lookup_var( tabelaSimbolos , yytext ) == -1 )
+						yylval = add_var( tabelaSimbolos, yytext, yylineno );					
+					return ID; 
+			 }
 . { unknownToken(yytext); exit(-1); }
 %%
 

@@ -13,6 +13,7 @@
 #include "tables.h"
 
 LitTable *tabelaLiterais;
+SymTable *tabelaSimbolos;
 int lval;
 int yylex(void);
 void yyerror(char const *s);
@@ -36,7 +37,10 @@ stmt_sequence: stmt_sequence stmt | stmt;
 
 stmt: if_stmt | repeat_stmt | assign_stmt | write_stmt | read_stmt | var_decl | puts_stmt;
 
-var_decl: INT ID SEMI;
+var_decl: INT ID SEMI { if ( lookup_var( tabelaSimbolos, get_name( tabelaSimbolos, $2) ) == -1 )
+									printf("SEMANTIC ERROR (%d): variable ’%s’ already declared at line %d\n", yylval, get_name( tabelaSimbolos, $2), get_line( tabelaSimbolos, $2));
+							 };
+									
 
 puts_stmt: PUTS STRING SEMI { printf("PUTS: %s.\n", get_literal(tabelaLiterais, $2)); };
 
@@ -55,6 +59,7 @@ expr: expr PLUS expr | expr MINUS expr | expr TIMES expr | expr OVER expr | LP e
 %%
 int main(void)
 {
+	tabelaSimbolos = create_sym_table();
 	tabelaLiterais = create_lit_table();
   int result = yyparse();
   if (result == 0) printf("Parse successful!\n");
