@@ -30,6 +30,12 @@ decla_stmt: INT id_stmt | REAL id_stmt | STRING id_stmt | BOOL id_stmt;
 
 id_stmt: ID COMMA id_stmt | ID SEMI;
 
-assign_stmt: ID 
+assign_stmt: ID ASSIGN expr SEMI;
+
+expr: expr PLUS expr | expr MINUS expr | expr TIMES expr | expr OVER expr | NUM | ID | TR | FAL;
+
+print_stmt: PRINT ID SEMI;
+
+
 
 %%
