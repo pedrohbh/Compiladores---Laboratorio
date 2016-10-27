@@ -6,7 +6,9 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include "Parser.h"
 
+void unknownToken(char* var);
 %}
 
 %%
