@@ -83,4 +83,43 @@ void run_ast(AST *ast)
     printf("Root: %p\n", ast);
 }
 
+void recRunAst( AST *node, SentinelaPilha *p )
+{
+	switch( node->kind )
+	{
+		case ASSIGN_NODE:
+			runAssign( node );
+			break;
+		case NUM_NODE:
+			runNum( node, p );
+			break;
+		case OVER_NODE:
+			runOver( node, p );
+			break;
+		
+	}
+}
+
+void runAssign( AST *node, SentinelaPilha *p )
+{
+	recRunAst( node->r );
+	store( node->l, desempilha( p ) );
+}
+
+
+
+void runNum( AST *node, SentinelaPilha *p )
+{
+	inserePilha( p, node->data );
+}
+
+void runOver( AST *node, SentinelaPilha *p )
+{
+	recRunAst( node->l );
+	recRunAst( node->d );
+	int r = desempilha( p );
+	int d = desempilha( p );
+	inserePilha( p, r / d );
+}
+
 
