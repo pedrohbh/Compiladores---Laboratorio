@@ -25,6 +25,18 @@ AST* new_node(NodeKind kind, int data) {
     return node;
 }
 
+AST *percorreArvore( AST *arvorePtr )
+{
+	int i;
+	for ( i = 0; i < CHILDREN_LIMIT; i++ )
+	{
+		if ( arvorePtr->child[ i ] == NULL )
+			continue;
+		percorreArvore( arvorePtr->child[ i ] );
+	}
+	return arvorePtr;
+}
+
 void add_child(AST *parent, AST *child) {
     if (parent->count == CHILDREN_LIMIT) {
         fprintf(stderr, "Cannot add another child!\n");

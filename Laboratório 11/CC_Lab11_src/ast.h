@@ -39,4 +39,6 @@ void print_dot(AST *ast);
 
 void free_tree(AST *ast);
 
+AST *percorreArvore( AST *arvorePtr );
+
 #endif
